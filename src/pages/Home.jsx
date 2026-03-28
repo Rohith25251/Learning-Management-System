@@ -193,6 +193,19 @@ const FeatureSections = () => {
 
 const TestimonialSlider = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [visibleItems, setVisibleItems] = useState(3);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 768) setVisibleItems(1);
+      else if (window.innerWidth < 1024) setVisibleItems(2);
+      else setVisibleItems(3);
+    };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   const stories = [
     { name: "Arya Verma", score: "98.4% CBSE XII", text: "I had a great experience at ScienceLMS. All my concepts were clear and I felt confident while appearing for the board exams.", img: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=200&h=200&fit=crop" },
     { name: "Akshat Kumar", score: "98.2% CBSE XII", text: "The LIVE Interactive classes with visual explanations helped me learn and retain all the topics better.", img: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=200&h=200&fit=crop" },
@@ -205,7 +218,7 @@ const TestimonialSlider = () => {
     { name: "Vivek Gupta", score: "99.5% Physics Topper", text: "Achieving a top rank in the Physics Board Exams wouldn't have been possible without the high-level conceptual grounding I received from the mentors here.", img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop" },
   ];
 
-  const totalSlides = stories.length - 2; // Showing 3 at a time
+  const totalSlides = stories.length - (visibleItems - 1);
 
   const nextSlide = () => {
     setCurrentIndex((prev) => (prev >= totalSlides - 1 ? 0 : prev + 1));
@@ -232,26 +245,28 @@ const TestimonialSlider = () => {
       </button>
 
       {/* Carousel Content Container */}
-      <div className="overflow-hidden px-2">
+      <div className="overflow-hidden px-4 md:px-0">
         <motion.div 
-          className="flex gap-6"
-          animate={{ x: `-${currentIndex * (100 / 3 + 0.5)}%` }} // Adjust for gap approx
+          className="flex"
+          animate={{ x: `-${currentIndex * (100 / visibleItems)}%` }}
           transition={{ type: "spring", stiffness: 300, damping: 30 }}
         >
           {stories.map((item, i) => (
-            <div key={i} className="min-w-[calc(33.333%-16px)] bg-white p-10 rounded-2xl shadow-[0_4px_24px_rgba(0,0,0,0.06)] border border-slate-50 flex flex-col h-full min-h-[380px]">
-              <p className="text-[#334155] text-lg font-medium leading-[1.6] mb-12 flex-grow">
-                "{item.text}"
-              </p>
+            <div key={i} className={`min-w-[100%] md:min-w-[50%] lg:min-w-[33.333%] px-2 md:px-3`}>
+              <div className="bg-white p-6 md:p-10 rounded-2xl shadow-[0_4px_24px_rgba(0,0,0,0.06)] border border-slate-50 flex flex-col h-full min-h-[340px] md:min-h-[380px]">
+                <p className="text-[#334155] text-lg font-medium leading-[1.6] mb-12 flex-grow">
+                  "{item.text}"
+                </p>
 
-              <div className="flex items-center gap-4 mt-auto">
-                <img src={item.img} alt={item.name} className="w-14 h-14 rounded-full object-cover filter grayscale" />
-                <div className="flex flex-col">
-                  <div className="flex items-center gap-2 mb-0.5">
-                    <h4 className="font-bold text-[#0f172a] text-lg">{item.name}</h4>
-                    <span className="bg-[#ff6b35] text-white text-[10px] font-black uppercase px-2 py-0.5 rounded-md tracking-wider">Student</span>
+                <div className="flex items-center gap-4 mt-auto">
+                  <img src={item.img} alt={item.name} className="w-14 h-14 rounded-full object-cover filter grayscale" />
+                  <div className="flex flex-col">
+                    <div className="flex items-center gap-2 mb-0.5">
+                      <h4 className="font-bold text-[#0f172a] text-lg">{item.name}</h4>
+                      <span className="bg-[#ff6b35] text-white text-[10px] font-black uppercase px-2 py-0.5 rounded-md tracking-wider">Student</span>
+                    </div>
+                    <p className="text-slate-400 text-sm font-bold uppercase tracking-wide">{item.score}</p>
                   </div>
-                  <p className="text-slate-400 text-sm font-bold uppercase tracking-wide">{item.score}</p>
                 </div>
               </div>
             </div>
@@ -816,12 +831,12 @@ const Home = () => {
               </motion.div>
             </div>
 
-            <div className="lg:w-7/12 relative">
-              <div className="flex justify-center md:justify-end gap-3 md:gap-5 perspective-2000 py-10 scale-90 md:scale-100">
+            <div className="lg:w-7/12 w-full relative">
+              <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-end gap-16 sm:gap-4 md:gap-5 perspective-2000 py-10">
                 {[
-                  { title: "PHYSICS", color: "from-[#1e293b] to-[#0f172a]", icon: <Atom />, rotation: "-rotate-12 translate-y-4", delay: 0, accent: "text-sky-400" },
-                  { title: "CHEMISTRY", color: "from-[#2d1b24] to-[#1a0c13]", icon: <FlaskConical />, rotation: "-rotate-6 translate-y-8", delay: 0.1, accent: "text-rose-500" },
-                  { title: "BIOLOGY", color: "from-[#1a2d1b] to-[#0d1a0e]", icon: <Dna />, rotation: "rotate-6 translate-y-10", delay: 0.2, accent: "text-emerald-500" }
+                  { title: "PHYSICS", color: "from-[#1e293b] to-[#0f172a]", icon: <Atom />, rotation: "sm:-rotate-12 translate-y-4", mobileRotation: "rotate-0", delay: 0, accent: "text-sky-400" },
+                  { title: "CHEMISTRY", color: "from-[#2d1b24] to-[#1a0c13]", icon: <FlaskConical />, rotation: "sm:-rotate-6 sm:translate-y-8", mobileRotation: "rotate-0", delay: 0.1, accent: "text-rose-500" },
+                  { title: "BIOLOGY", color: "from-[#1a2d1b] to-[#0d1a0e]", icon: <Dna />, rotation: "sm:rotate-6 sm:translate-y-10", mobileRotation: "rotate-0", delay: 0.2, accent: "text-emerald-500" }
                 ].map((book, bIdx) => (
                   <motion.div
                     key={book.title}
@@ -830,7 +845,7 @@ const Home = () => {
                     viewport={{ once: true }}
                     transition={{ duration: 0.8, delay: book.delay }}
                     whileHover={{ y: -30, rotate: 0, scale: 1.05, zIndex: 100 }}
-                    className={`w-[130px] md:w-[170px] aspect-[1/1.5] bg-gradient-to-br ${book.color} rounded-r-xl shadow-[30px_30px_60px_rgba(0,0,0,0.8)] border-l-[12px] border-black/80 flex flex-col items-center justify-between p-6 transform transition-all duration-500 cursor-pointer relative overflow-hidden group ${book.rotation}`}
+                    className={`w-[180px] sm:w-[130px] md:w-[170px] aspect-[1/1.5] bg-gradient-to-br ${book.color} rounded-r-xl shadow-[30px_30px_60px_rgba(0,0,0,0.8)] border-l-[12px] border-black/80 flex flex-col items-center justify-between p-6 transform transition-all duration-500 cursor-pointer relative overflow-hidden group ${book.mobileRotation} ${book.rotation}`}
                   >
                     {/* Texture/Overlay */}
                     <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]"></div>
@@ -984,7 +999,7 @@ const Home = () => {
 
 // 8. Footer Section
 const Footer = () => (
-  <footer className="w-full font-sans border-t-4 border-slate-200">
+<footer className="w-full font-sans border-t-4 border-slate-200">
     {/* Top Section */}
     <div className="bg-[#F4F9FF] py-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -992,7 +1007,11 @@ const Footer = () => (
           
           {/* BRAND COLUMN */}
           <div className="w-full lg:w-[25%] mb-10 lg:mb-0">
-             <Link to="/" className="flex items-center gap-2 mb-6 group">
+             <Link 
+               to="/" 
+               onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+               className="flex items-center gap-2 mb-6 group"
+             >
                 <div className="text-blue-600 transform group-hover:scale-110 transition-transform duration-300">
                    <Atom size={40} strokeWidth={2.5} />
                 </div>
@@ -1006,7 +1025,7 @@ const Footer = () => (
           </div>
 
           <div className="flex flex-wrap flex-1 justify-between gap-8 md:gap-4">
-            
+
             {/* COURSE OFFERINGS */}
             <div className="w-full sm:w-[45%] md:w-[28%] lg:w-auto">
               <h4 className="font-bold text-slate-900 mb-5 text-[13px] uppercase tracking-wide">COURSE OFFERINGS</h4>

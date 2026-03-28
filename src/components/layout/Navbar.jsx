@@ -41,34 +41,34 @@ const Navbar = () => {
         <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-[72px]">
             {/* Left: Logo and Search */}
-            <div className="flex items-center flex-1 gap-8">
+            <div className="flex items-center flex-1 gap-2 xl:gap-6">
               <Link 
                 to="/" 
                 onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-                className="flex-shrink-0 flex items-center gap-1.5 group"
+                className="flex-shrink-0 flex items-center gap-1 group"
               >
                 <div className="text-primary-600 transform group-hover:scale-110 transition-transform duration-300">
-                  <Atom size={32} strokeWidth={2.5} />
+                  <Atom size={26} className="md:w-7 md:h-7" strokeWidth={2.5} />
                 </div>
-                <span className="font-black text-xl tracking-tighter text-slate-900 group-hover:text-primary-600 transition-colors">
+                <span className="font-black text-md md:text-lg tracking-tighter text-slate-900 group-hover:text-primary-600 transition-colors">
                   Science<span className="text-primary-600">LMS</span>
                 </span>
               </Link>
 
-              <div className="hidden md:flex relative max-w-[280px] w-full group">
-                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                  <Search size={16} className="text-slate-400 group-focus-within:text-primary-600 transition-colors" />
+              <div className="hidden lg:flex relative max-w-[180px] xl:max-w-[240px] w-full group">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <Search size={12} className="text-slate-400 group-focus-within:text-primary-600 transition-colors" />
                 </div>
                 <input
                   type="text"
                   placeholder="Search courses..."
-                  className="block w-full pl-10 pr-4 py-2 bg-slate-50 border border-slate-100 rounded-full text-[13px] focus:outline-none focus:ring-2 focus:ring-primary-600/10 focus:border-primary-600 hover:border-slate-200 transition-all font-medium"
+                  className="block w-full pl-8 pr-3 py-1.5 bg-slate-50 border border-slate-100 rounded-full text-[10px] xl:text-[11px] focus:outline-none focus:ring-2 focus:ring-primary-600/10 focus:border-primary-600 hover:border-slate-200 transition-all font-medium"
                 />
               </div>
             </div>
 
             {/* Center: Navigation Links */}
-            <div className="hidden lg:flex items-center space-x-1">
+            <div className="hidden lg:flex items-center space-x-0">
               {navItems.map((item) => (
                 <div
                   key={item.name}
@@ -78,9 +78,9 @@ const Navbar = () => {
                 >
                   {item.dropdown ? (
                     <>
-                      <button className="flex items-center gap-1 text-slate-600 hover:text-primary-600 px-3 py-2 rounded-md text-[13px] font-semibold tracking-wide transition-colors">
+                      <button className="flex items-center gap-1 text-slate-600 hover:text-primary-600 px-1.5 xl:px-3 py-2 rounded-md text-[11px] xl:text-[12px] font-bold tracking-tight transition-colors whitespace-nowrap">
                         {item.name}
-                        <ChevronDown size={12} className={`transition-transform duration-300 ${activeDropdown === item.name ? 'rotate-180' : ''}`} />
+                        <ChevronDown size={10} className={`transition-transform duration-300 ${activeDropdown === item.name ? 'rotate-180' : ''}`} />
                       </button>
                       {activeDropdown === item.name && (
                         <div className="absolute left-0 mt-0 w-48 bg-white border border-slate-50 rounded-xl shadow-2xl shadow-slate-200/50 py-2 z-[60] animate-in fade-in slide-in-from-top-2 duration-200">
@@ -88,7 +88,7 @@ const Navbar = () => {
                             <Link
                               key={sub}
                               to={`/courses/${sub.toLowerCase()}`}
-                              className="block px-4 py-2 text-[13px] font-semibold text-slate-500 hover:bg-slate-50 hover:text-primary-600 transition-colors"
+                              className="block px-4 py-2 text-[11px] xl:text-[12px] font-semibold text-slate-500 hover:bg-slate-50 hover:text-primary-600 transition-colors"
                             >
                               {sub}
                             </Link>
@@ -99,7 +99,7 @@ const Navbar = () => {
                   ) : (
                     <Link
                       to={item.link}
-                      className="text-slate-600 hover:text-primary-600 px-3 py-2 rounded-md text-[13px] font-semibold tracking-wide transition-colors"
+                      className="text-slate-600 hover:text-primary-600 px-1.5 xl:px-3 py-2 rounded-md text-[11px] xl:text-[12px] font-bold tracking-tight transition-colors whitespace-nowrap"
                     >
                       {item.name}
                     </Link>
@@ -109,21 +109,21 @@ const Navbar = () => {
             </div>
 
             {/* Right: Actions */}
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-1.5 xl:gap-3">
               <div className="relative">
                 <button
                   onClick={() => setShowNotifications(true)}
-                  className="p-2.5 text-slate-500 hover:bg-slate-50 hover:text-slate-900 rounded-full transition-all relative"
+                  className="p-1.5 text-slate-500 hover:bg-slate-50 hover:text-slate-900 rounded-full transition-all relative"
                 >
-                  <Bell size={20} />
+                  <Bell size={16} className="md:w-4 md:h-4" />
                   {isLoggedIn && (
-                    <span className="absolute top-2.5 right-2.5 w-2 h-2 bg-red-500 rounded-full border-2 border-white animate-pulse"></span>
+                    <span className="absolute top-1 right-1 w-1.5 h-1.5 bg-red-500 rounded-full border-2 border-white animate-pulse"></span>
                   )}
                 </button>
               </div>
 
-              <Link to="/login" className="hidden lg:flex bg-[#2f3542] hover:bg-[#1e232b] text-white px-6 py-2 rounded-lg text-sm font-bold shadow-sm transition-all transform hover:-translate-y-0.5 active:scale-95 items-center gap-2">
-                <User size={16} />
+              <Link to="/login" className="hidden lg:flex bg-[#2f3542] hover:bg-[#1e232b] text-white px-3 xl:px-5 py-2 rounded-lg text-[11px] xl:text-xs font-bold shadow-sm transition-all transform hover:-translate-y-0.5 active:scale-95 items-center gap-1.5">
+                <User size={12} className="xl:w-3.5 xl:h-3.5" />
                 Sign In
               </Link>
 
