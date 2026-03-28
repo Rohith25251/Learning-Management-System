@@ -1,0 +1,136 @@
+@import "tailwindcss";
+
+@theme {
+  --color-governor-bay: #4435BB;
+  --color-flamingo: #F4522D;
+  --color-eastern-blue: #199FA3;
+  --color-california: #F69C08;
+  --color-bermuda: #72D8BA;
+  --color-sunflower: #E9E729;
+
+  --color-primary-50: #EDF0FF;
+  --color-primary-100: #DCE2FF;
+  --color-primary-500: #4435BB;
+  --color-primary-600: #3A2CA6;
+  --color-primary-700: #2F238E;
+  --color-primary-900: #1A1259;
+  
+  --color-secondary-500: #F4522D;
+  --color-secondary-600: #DC4624;
+
+  --font-sans: "Inter", sans-serif;
+}
+
+@layer base {
+  body {
+    @apply bg-slate-50 text-slate-900 antialiased;
+    font-family: var(--font-sans);
+  }
+}
+
+/* Enforcing the New Colour Schema Systematically */
+
+/* Map standard bluish components to Governor Bay (#4435BB) */
+.text-blue-600, .text-indigo-600, .text-blue-500, .text-primary-600, .text-primary-500 {
+  color: var(--color-governor-bay) !important;
+}
+.bg-blue-600, .bg-indigo-600, .bg-primary-600, .bg-primary-500 {
+  background-color: var(--color-governor-bay) !important;
+  color: white !important;
+}
+.border-blue-600, .border-primary-500, .border-indigo-600 {
+  border-color: var(--color-governor-bay) !important;
+}
+.from-blue-600, .from-primary-600, .from-indigo-600, .from-primary-500 {
+  --tw-gradient-from: var(--color-governor-bay) !important;
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important;
+}
+.bg-blue-50, .bg-primary-50, .bg-indigo-50 {
+  background-color: var(--color-primary-50) !important;
+}
+.text-blue-700, .text-primary-900 {
+  color: var(--color-primary-900) !important;
+}
+
+/* Map standard pink/red components to Flamingo (#F4522D) */
+.text-pink-600, .text-rose-600, .text-red-500, .text-red-600 {
+  color: var(--color-flamingo) !important;
+}
+.bg-pink-500, .bg-rose-500, .bg-red-500, .bg-red-400 {
+  background-color: var(--color-flamingo) !important;
+}
+.to-indigo-600, .to-primary-500 {
+  --tw-gradient-to: var(--color-flamingo) !important;
+}
+
+/* Map teal/cyan elements to Eastern Blue (#199FA3) */
+.text-teal-600, .text-cyan-600 {
+  color: var(--color-eastern-blue) !important;
+}
+.bg-teal-500, .bg-cyan-500 {
+  background-color: var(--color-eastern-blue) !important;
+}
+
+/* Map yellow/amber attention elements to California (#F69C08) */
+.text-yellow-500, .text-yellow-600 {
+  color: var(--color-california) !important;
+}
+.bg-yellow-500, .bg-yellow-600 {
+  background-color: var(--color-california) !important;
+}
+
+/* Map green/success elements to Bermuda (#72D8BA) */
+.text-emerald-600, .text-green-600, .text-green-500, .text-emerald-500 {
+  color: var(--color-bermuda) !important;
+}
+.bg-emerald-500, .bg-green-500, .bg-emerald-100 {
+  background-color: var(--color-bermuda) !important;
+}
+
+/* Additional mappings for Bright Sunflower (#E9E729) */
+.bg-yellow-400 {
+  background-color: var(--color-sunflower) !important;
+}
+
+/* Overriding SVG coloring securely */
+svg.text-blue-500, svg.text-blue-600, svg.text-indigo-600, svg.text-primary-500 {
+  color: var(--color-governor-bay) !important;
+}
+svg.text-red-500, svg.text-red-600, svg.text-rose-600, svg.text-pink-600 {
+  color: var(--color-flamingo) !important;
+}
+svg.text-green-500, svg.text-green-600, svg.text-emerald-500, svg.text-emerald-600 {
+  color: var(--color-bermuda) !important;
+}
+
+/* Remove Unnecessary White Spaces All Over Website */
+section, .py-20, .py-24, .pt-24, .pb-20, .pb-32, .pt-32, .pb-28, .py-12, .py-16 {
+  padding-top: 2rem !important;
+  padding-bottom: 2rem !important;
+}
+.mb-16, .mb-20, .pb-16, .pb-20, .mb-10, .mb-12 {
+  margin-bottom: 1.25rem !important;
+}
+.gap-16 {
+  gap: 1.5rem !important;
+}
+.gap-12 {
+  gap: 1.25rem !important;
+}
+
+.frosted-glass {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+.animate-shake {
+  animation: shake 0.2s ease-in-out 0s 2;
+}
